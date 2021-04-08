@@ -12,15 +12,11 @@ class DcatAuthCaptchaServiceProvider extends ServiceProvider
 
     public function register()
     {
-        //
     }
 
     public function init()
     {
         parent::init();
-
-        //
-
     }
 
     public function settingForm()

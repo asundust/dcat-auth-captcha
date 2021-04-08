@@ -86,8 +86,8 @@ class DcatAuthCaptchaController extends BaseAuthController
     /**
      * Get Login.
      *
-     * @param Content $content
      * @return Content|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getLogin(Content $content)
@@ -169,7 +169,7 @@ class DcatAuthCaptchaController extends BaseAuthController
                 break;
         }
 
-        return $content->full()->body(view(DcatAuthCaptchaServiceProvider::instance()->getName() . '::' . $this->captchaProvider . '.' . $this->providerStyles[$this->captchaProvider][$this->captchaStyle], [
+        return $content->full()->body(view(DcatAuthCaptchaServiceProvider::instance()->getName().'::'.$this->captchaProvider.'.'.$this->providerStyles[$this->captchaProvider][$this->captchaStyle], [
             'captchaAppid' => $this->captchaAppid,
             'captchaStyle' => $this->captchaStyle,
             'extConfig' => $extConfig,
@@ -179,7 +179,6 @@ class DcatAuthCaptchaController extends BaseAuthController
     /**
      * Get Geetest Status.
      *
-     * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     private function getGeetestStatus(): array
@@ -193,7 +192,7 @@ class DcatAuthCaptchaController extends BaseAuthController
             'new_captcha' => 1,
             'user_id' => '',
         ];
-        $url = 'http://api.geetest.com/register.php?' . http_build_query($params);
+        $url = 'http://api.geetest.com/register.php?'.http_build_query($params);
         $response = $this->captchaHttp()->get($url);
         $statusCode = $response->getStatusCode();
         $contents = $response->getBody()->getContents();
@@ -211,12 +210,10 @@ class DcatAuthCaptchaController extends BaseAuthController
      * Geetest Success Process.
      *
      * @param $challenge
-     *
-     * @return array
      */
     private function geetestSuccessProcess($challenge): array
     {
-        $challenge = md5($challenge . $this->captchaSecret);
+        $challenge = md5($challenge.$this->captchaSecret);
         $result = [
             'success' => 1,
             'gt' => $this->captchaAppid,
@@ -230,14 +227,12 @@ class DcatAuthCaptchaController extends BaseAuthController
 
     /**
      * Geetest Fail Process.
-     *
-     * @return array
      */
     private function geetestFailProcess(): array
     {
         $rnd1 = md5(rand(0, 100));
         $rnd2 = md5(rand(0, 100));
-        $challenge = $rnd1 . substr($rnd2, 0, 2);
+        $challenge = $rnd1.substr($rnd2, 0, 2);
         $result = [
             'success' => 0,
             'gt' => $this->captchaAppid,
@@ -253,16 +248,17 @@ class DcatAuthCaptchaController extends BaseAuthController
      * Get Verify5 Token.
      *
      * @return mixed|string
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     private function getVerify5Token()
     {
         $params = [
             'appid' => $this->captchaAppid,
-            'timestamp' => now()->timestamp . '000',
+            'timestamp' => now()->timestamp.'000',
         ];
         $params['signature'] = $this->getSignature($this->captchaSecret, $params);
-        $url = 'https://' . config('admin.extensions.dcat-auth-captcha.host') . '/openapi/getToken?' . http_build_query($params);
+        $url = 'https://'.config('admin.extensions.dcat-auth-captcha.host').'/openapi/getToken?'.http_build_query($params);
         $response = $this->captchaHttp()->get($url);
         $statusCode = $response->getStatusCode();
         $contents = $response->getBody()->getContents();
@@ -280,8 +276,8 @@ class DcatAuthCaptchaController extends BaseAuthController
     /**
      * Post Login.
      *
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|mixed|\Symfony\Component\HttpFoundation\Response
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function postLogin(Request $request)
@@ -335,8 +331,8 @@ class DcatAuthCaptchaController extends BaseAuthController
     /**
      * Dingxiang Captcha.
      *
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     private function captchaValidateDingxiang(Request $request)
@@ -353,12 +349,12 @@ class DcatAuthCaptchaController extends BaseAuthController
         $params = [
             'appKey' => $this->captchaAppid,
             'constId' => $tokenArr[1],
-            'sign' => md5($this->captchaSecret . $tokenArr[0] . $this->captchaSecret),
+            'sign' => md5($this->captchaSecret.$tokenArr[0].$this->captchaSecret),
             'token' => $tokenArr[0],
         ];
 
         $url = 'https://cap.dingxiang-inc.com/api/tokenVerify';
-        $response = $this->captchaHttp()->get($url . '?' . http_build_query($params));
+        $response = $this->captchaHttp()->get($url.'?'.http_build_query($params));
         $statusCode = $response->getStatusCode();
         $contents = $response->getBody()->getContents();
 
@@ -378,8 +374,8 @@ class DcatAuthCaptchaController extends BaseAuthController
     /**
      * Geetest Captcha.
      *
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function captchaValidateGeetest(Request $request)
@@ -434,8 +430,8 @@ class DcatAuthCaptchaController extends BaseAuthController
     /**
      * HCaptcha Captcha.
      *
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     private function captchaValidateHCaptcha(Request $request)
@@ -473,8 +469,8 @@ class DcatAuthCaptchaController extends BaseAuthController
     /**
      * Recaptcha Captcha.
      *
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     private function captchaValidateRecaptcha(Request $request)
@@ -490,7 +486,7 @@ class DcatAuthCaptchaController extends BaseAuthController
             'remoteip' => $request->ip(),
         ];
 
-        $url = rtrim(DcatAuthCaptchaServiceProvider::setting('domain') ?? 'https://recaptcha.net') . '/recaptcha/api/siteverify';
+        $url = rtrim(DcatAuthCaptchaServiceProvider::setting('domain') ?? 'https://recaptcha.net').'/recaptcha/api/siteverify';
         $response = $this->captchaHttp()->post($url, [
             'form_params' => $params,
         ]);
@@ -518,8 +514,8 @@ class DcatAuthCaptchaController extends BaseAuthController
     /**
      * Tencent Captcha.
      *
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     private function captchaValidateTencent(Request $request)
@@ -539,7 +535,7 @@ class DcatAuthCaptchaController extends BaseAuthController
         ];
 
         $url = 'https://ssl.captcha.qq.com/ticket/verify';
-        $response = $this->captchaHttp()->get($url . '?' . http_build_query($params));
+        $response = $this->captchaHttp()->get($url.'?'.http_build_query($params));
         $statusCode = $response->getStatusCode();
         $contents = $response->getBody()->getContents();
 
@@ -557,8 +553,8 @@ class DcatAuthCaptchaController extends BaseAuthController
     /**
      * Verify5 Captcha.
      *
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function captchaValidateVerify5(Request $request)
@@ -573,10 +569,10 @@ class DcatAuthCaptchaController extends BaseAuthController
             'host' => config('admin.extensions.dcat-auth-captcha.host'),
             'verifyid' => $token,
             'token' => $verify5Token,
-            'timestamp' => now()->timestamp . '000',
+            'timestamp' => now()->timestamp.'000',
         ];
         $params['signature'] = $this->getSignature($this->captchaSecret, $params);
-        $url = 'https://' . config('admin.extensions.dcat-auth-captcha.host') . '/openapi/verify?' . http_build_query($params);
+        $url = 'https://'.config('admin.extensions.dcat-auth-captcha.host').'/openapi/verify?'.http_build_query($params);
         $response = $this->captchaHttp()->get($url);
         $statusCode = $response->getStatusCode();
         $contents = $response->getBody()->getContents();
@@ -594,8 +590,8 @@ class DcatAuthCaptchaController extends BaseAuthController
     /**
      * Vaptcha Captcha.
      *
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     private function captchaValidateVaptcha(Request $request)
@@ -633,8 +629,8 @@ class DcatAuthCaptchaController extends BaseAuthController
     /**
      * Wangyi Captcha.
      *
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     private function captchaValidateWangyi(Request $request)
@@ -655,7 +651,7 @@ class DcatAuthCaptchaController extends BaseAuthController
             'user' => '',
             'secretId' => $this->captchaSecret,
             'version' => 'v2',
-            'timestamp' => now()->timestamp . '000',
+            'timestamp' => now()->timestamp.'000',
             'nonce' => Str::random(),
         ];
 
@@ -684,8 +680,8 @@ class DcatAuthCaptchaController extends BaseAuthController
     /**
      * Yunpian Captcha.
      *
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     private function captchaValidateYunpian(Request $request)
@@ -708,7 +704,7 @@ class DcatAuthCaptchaController extends BaseAuthController
             'secretId' => $this->captchaSecret,
             'user' => '',
             'version' => '1.0',
-            'timestamp' => now()->timestamp . '000',
+            'timestamp' => now()->timestamp.'000',
             'nonce' => Str::random(),
         ];
 
@@ -738,15 +734,13 @@ class DcatAuthCaptchaController extends BaseAuthController
      *
      * @param $secretKey
      * @param $params
-     *
-     * @return string
      */
     public function getSignature($secretKey, $params): string
     {
         ksort($params);
         $str = '';
         foreach ($params as $key => $value) {
-            $str .= $key . $value;
+            $str .= $key.$value;
         }
         $str .= $secretKey;
 
@@ -756,13 +750,12 @@ class DcatAuthCaptchaController extends BaseAuthController
     /**
      * Login Validate.
      *
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     private function loginValidate(Request $request)
     {
         $credentials = $request->only([$this->username(), 'password']);
-        $remember = (bool)$request->input('remember', false);
+        $remember = (bool) $request->input('remember', false);
 
         /** @var \Illuminate\Validation\Validator $validator */
         $validator = Validator::make($credentials, [
@@ -785,8 +778,6 @@ class DcatAuthCaptchaController extends BaseAuthController
 
     /**
      * Http.
-     *
-     * @return Client
      */
     private function captchaHttp(): Client
     {
@@ -801,17 +792,17 @@ class DcatAuthCaptchaController extends BaseAuthController
      * getErrorMessage.
      *
      * @param $type
-     * @return string|null
      */
     private function toTrans($type): ?string
     {
-        return DcatAuthCaptchaServiceProvider::trans('dcat-auth-captcha.messages.' . $type);
+        return DcatAuthCaptchaServiceProvider::trans('dcat-auth-captcha.messages.'.$type);
     }
 
     /**
      * CaptchaErrorResponse.
      *
      * @param $message
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function captchaErrorResponse($message)

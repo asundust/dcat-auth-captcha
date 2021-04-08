@@ -27,7 +27,7 @@ class Setting extends Form
         ];
 
         $documentHelp = $this->toTrans('parameters_document');
-        $documentAddress = ' <a href="https://github.com/asundust/dcat-auth-captcha/blob/master/README.md" target="_blank">' . $this->toTrans('document_address') . '</a>';
+        $documentAddress = ' <a href="https://github.com/asundust/dcat-auth-captcha/blob/master/README.md" target="_blank">'.$this->toTrans('document_address').'</a>';
 
         $this->select('provider', $this->toTrans('provider'))
             ->options($providers)
@@ -35,25 +35,24 @@ class Setting extends Form
         $this->text('appid', $this->toTrans('appid'))->required();
         $this->text('secret', $this->toTrans('secret'))->required();
         $this->text('style', $this->toTrans('style'))
-            ->help($documentHelp . $documentAddress);
+            ->help($documentHelp.$documentAddress);
         $this->text('secret_key', $this->toTrans('secret_key'))
-            ->help($documentHelp . $documentAddress);
+            ->help($documentHelp.$documentAddress);
         $this->text('host', $this->toTrans('host'))
-            ->help($documentHelp . $documentAddress);
+            ->help($documentHelp.$documentAddress);
         $this->text('domain', $this->toTrans('domain'))
-            ->help($documentHelp . $documentAddress);
+            ->help($documentHelp.$documentAddress);
         $this->text('score', $this->toTrans('score'))
-            ->help($documentHelp . $documentAddress);
+            ->help($documentHelp.$documentAddress);
         $this->textarea('ext_config', $this->toTrans('ext_config'))
             ->help($this->toTrans('tip_json'));
     }
 
     /**
      * @param $key
-     * @return string
      */
     public function toTrans($key): string
     {
-        return $this->trans('dcat-auth-captcha.' . $key);
+        return $this->trans('dcat-auth-captcha.'.$key);
     }
 }
