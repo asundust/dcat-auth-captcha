@@ -1,0 +1,35 @@
+<?php
+
+return [
+    'providers' => [
+        'dingxiang' => '顶象',
+        'geetest' => '极验',
+        'hcaptcha' => 'hCaptcha',
+        'recaptchav2' => 'Recaptcha v2(谷歌)',
+        'recaptcha' => 'Recaptcha v3(谷歌)',
+        'tencent' => '腾讯防水墙',
+        'verify5' => 'V5',
+        'vaptcha' => 'Vaptcha',
+        'wangyi' => '网易易盾',
+        'yunpian' => '云片',
+    ],
+    'messages' => [
+        'fail' => "滑动验证未通过，请重试。",
+        'config' => "请完成验证。",
+        'error' => "配置错误。",
+        'complete' => "请完成验证。",
+    ],
+    'config' => '验证码配置',
+    'provider' => '验证码服务商',
+    'style' => '验证码样式',
+    'appid' => 'AppId',
+    'secret' => 'Secret',
+    'secret_key' => 'Secret Key',
+    'domain' => '服务域名',
+    'score' => '可信任分数',
+    'host' => '主机',
+    'ext_config' => '额外配置',
+    'tip_json' => '目前仅支持填写JSON，参见官方文档。',
+    'parameters_document' => '参数说明，参见文档。',
+    'document_address' => '文档地址',
+];

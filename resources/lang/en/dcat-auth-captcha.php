@@ -1,0 +1,35 @@
+<?php
+
+return [
+    'providers' => [
+        'dingxiang' => 'Ding Xiang',
+        'geetest' => 'Geetest',
+        'hcaptcha' => 'hCaptcha',
+        'recaptchav2' => 'Google Recaptcha v2',
+        'recaptcha' => 'Google Recaptcha v3',
+        'tencent' => 'Tencent Waterproof Wall',
+        'verify5' => 'Verify5',
+        'vaptcha' => 'Vaptcha',
+        'wangyi' => 'NetEase Dun',
+        'yunpian' => 'Yunpian',
+    ],
+    'messages' => [
+        'fail' => "Sliding validation failed. Please try again.",
+        'config' => "Please complete the validation.",
+        'error' => "Config Error.",
+        'complete' => "Please complete the validation.",
+    ],
+    'config' => 'Captcha Config',
+    'provider' => 'Captcha provider',
+    'style' => 'Captcha style',
+    'appid' => 'AppId',
+    'secret' => 'Secret',
+    'secret_key' => 'Secret Key',
+    'domain' => 'Domain',
+    'score' => 'Score',
+    'host' => 'Host',
+    'ext_config' => 'Ext',
+    'tip_json' => 'At present, only JSON is supported. Please refer to the official documents.',
+    'parameters_document' => 'For details about the parameters,see the document.',
+    'document_address' => 'Document Address',
+];

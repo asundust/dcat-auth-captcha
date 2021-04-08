@@ -1,0 +1,44 @@
+{
+  "name": "asundust/dcat-auth-captcha",
+  "alias": "登陆滑动验证码",
+  "description": "Sliding captcha for Dcat-Admin auth, Multiple platform support / Dcat-Admin登陆 (滑动)验证插件 多平台支持",
+  "type": "library",
+  "keywords": [
+    "dcat-admin",
+    "extension",
+    "sliding captcha",
+    "auth",
+    "login",
+    "captcha",
+    "auth captcha",
+    "multiple platform"
+  ],
+  "homepage": "https://github.com/asundust/dcat-auth-captcha",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "asundust",
+      "email": "asundust@qq.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.1.0",
+    "ext-json": "*",
+    "dcat/laravel-admin": "~2.0",
+    "guzzlehttp/guzzle": "^6.3",
+    "jenssegers/agent": "^2.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "Asundust\\DcatAuthCaptcha\\": "src/"
+    }
+  },
+  "extra": {
+    "dcat-admin": "Asundust\\DcatAuthCaptcha\\DcatAuthCaptchaServiceProvider",
+    "laravel": {
+      "providers": [
+        "Asundust\\DcatAuthCaptcha\\DcatAuthCaptchaServiceProvider"
+      ]
+    }
+  }
+}
