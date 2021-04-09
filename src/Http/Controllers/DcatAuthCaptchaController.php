@@ -170,7 +170,7 @@ class DcatAuthCaptchaController extends BaseAuthController
                 break;
         }
 
-        return $content->full()->body(view(DcatAuthCaptchaServiceProvider::instance()->getName() . '::' . $this->captchaProvider . '.' . $this->providerStyles[$this->captchaProvider][$this->captchaStyle], [
+        return $content->full()->body(view(DcatAuthCaptchaServiceProvider::instance()->getName().'::'.$this->captchaProvider.'.'.$this->providerStyles[$this->captchaProvider][$this->captchaStyle], [
             'captchaAppid' => $this->captchaAppid,
             'captchaStyle' => $this->captchaStyle,
             'extConfig' => $extConfig,
@@ -193,7 +193,7 @@ class DcatAuthCaptchaController extends BaseAuthController
             'new_captcha' => 1,
             'user_id' => '',
         ];
-        $url = 'http://api.geetest.com/register.php?' . http_build_query($params);
+        $url = 'http://api.geetest.com/register.php?'.http_build_query($params);
         $response = $this->captchaHttp()->get($url);
         $statusCode = $response->getStatusCode();
         $contents = $response->getBody()->getContents();
@@ -214,7 +214,7 @@ class DcatAuthCaptchaController extends BaseAuthController
      */
     private function geetestSuccessProcess($challenge): array
     {
-        $challenge = md5($challenge . $this->captchaSecret);
+        $challenge = md5($challenge.$this->captchaSecret);
         $result = [
             'success' => 1,
             'gt' => $this->captchaAppid,
@@ -233,7 +233,7 @@ class DcatAuthCaptchaController extends BaseAuthController
     {
         $rnd1 = md5(rand(0, 100));
         $rnd2 = md5(rand(0, 100));
-        $challenge = $rnd1 . substr($rnd2, 0, 2);
+        $challenge = $rnd1.substr($rnd2, 0, 2);
         $result = [
             'success' => 0,
             'gt' => $this->captchaAppid,
@@ -256,10 +256,10 @@ class DcatAuthCaptchaController extends BaseAuthController
     {
         $params = [
             'appid' => $this->captchaAppid,
-            'timestamp' => now()->timestamp . '000',
+            'timestamp' => now()->timestamp.'000',
         ];
         $params['signature'] = $this->getSignature($this->captchaSecret, $params);
-        $url = 'https://' . DcatAuthCaptchaServiceProvider::setting('host') . '/openapi/getToken?' . http_build_query($params);
+        $url = 'https://'.DcatAuthCaptchaServiceProvider::setting('host').'/openapi/getToken?'.http_build_query($params);
         $response = $this->captchaHttp()->get($url);
         $statusCode = $response->getStatusCode();
         $contents = $response->getBody()->getContents();
@@ -350,12 +350,12 @@ class DcatAuthCaptchaController extends BaseAuthController
         $params = [
             'appKey' => $this->captchaAppid,
             'constId' => $tokenArr[1],
-            'sign' => md5($this->captchaSecret . $tokenArr[0] . $this->captchaSecret),
+            'sign' => md5($this->captchaSecret.$tokenArr[0].$this->captchaSecret),
             'token' => $tokenArr[0],
         ];
 
         $url = 'https://cap.dingxiang-inc.com/api/tokenVerify';
-        $response = $this->captchaHttp()->get($url . '?' . http_build_query($params));
+        $response = $this->captchaHttp()->get($url.'?'.http_build_query($params));
         $statusCode = $response->getStatusCode();
         $contents = $response->getBody()->getContents();
 
@@ -487,7 +487,7 @@ class DcatAuthCaptchaController extends BaseAuthController
             'remoteip' => $request->ip(),
         ];
 
-        $url = rtrim(DcatAuthCaptchaServiceProvider::setting('domain') ?? 'https://recaptcha.net') . '/recaptcha/api/siteverify';
+        $url = rtrim(DcatAuthCaptchaServiceProvider::setting('domain') ?? 'https://recaptcha.net').'/recaptcha/api/siteverify';
         $response = $this->captchaHttp()->post($url, [
             'form_params' => $params,
         ]);
@@ -536,7 +536,7 @@ class DcatAuthCaptchaController extends BaseAuthController
         ];
 
         $url = 'https://ssl.captcha.qq.com/ticket/verify';
-        $response = $this->captchaHttp()->get($url . '?' . http_build_query($params));
+        $response = $this->captchaHttp()->get($url.'?'.http_build_query($params));
         $statusCode = $response->getStatusCode();
         $contents = $response->getBody()->getContents();
 
@@ -570,10 +570,10 @@ class DcatAuthCaptchaController extends BaseAuthController
             'host' => DcatAuthCaptchaServiceProvider::setting('host'),
             'verifyid' => $token,
             'token' => $verify5Token,
-            'timestamp' => now()->timestamp . '000',
+            'timestamp' => now()->timestamp.'000',
         ];
         $params['signature'] = $this->getSignature($this->captchaSecret, $params);
-        $url = 'https://' . DcatAuthCaptchaServiceProvider::setting('host') . '/openapi/verify?' . http_build_query($params);
+        $url = 'https://'.DcatAuthCaptchaServiceProvider::setting('host').'/openapi/verify?'.http_build_query($params);
         $response = $this->captchaHttp()->get($url);
         $statusCode = $response->getStatusCode();
         $contents = $response->getBody()->getContents();
@@ -652,7 +652,7 @@ class DcatAuthCaptchaController extends BaseAuthController
             'user' => '',
             'secretId' => $this->captchaSecret,
             'version' => 'v2',
-            'timestamp' => now()->timestamp . '000',
+            'timestamp' => now()->timestamp.'000',
             'nonce' => Str::random(),
         ];
 
@@ -705,7 +705,7 @@ class DcatAuthCaptchaController extends BaseAuthController
             'secretId' => $this->captchaSecret,
             'user' => '',
             'version' => '1.0',
-            'timestamp' => now()->timestamp . '000',
+            'timestamp' => now()->timestamp.'000',
             'nonce' => Str::random(),
         ];
 
@@ -741,7 +741,7 @@ class DcatAuthCaptchaController extends BaseAuthController
         ksort($params);
         $str = '';
         foreach ($params as $key => $value) {
-            $str .= $key . $value;
+            $str .= $key.$value;
         }
         $str .= $secretKey;
 
@@ -756,7 +756,7 @@ class DcatAuthCaptchaController extends BaseAuthController
     private function loginValidate(Request $request)
     {
         $credentials = $request->only([$this->username(), 'password']);
-        $remember = (bool)$request->input('remember', false);
+        $remember = (bool) $request->input('remember', false);
 
         /** @var \Illuminate\Validation\Validator $validator */
         $validator = Validator::make($credentials, [
@@ -796,7 +796,7 @@ class DcatAuthCaptchaController extends BaseAuthController
      */
     private function toTrans($type): ?string
     {
-        return DcatAuthCaptchaServiceProvider::trans('dcat-auth-captcha.messages.' . $type);
+        return DcatAuthCaptchaServiceProvider::trans('dcat-auth-captcha.messages.'.$type);
     }
 
     /**
