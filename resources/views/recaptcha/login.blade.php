@@ -22,6 +22,12 @@
               return false;
             }
           },
+          success: function () {
+            //
+          },
+          error: function () {
+            $('#token').attr('value', '');
+          }
         });
       });
     });

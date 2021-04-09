@@ -1,53 +1,29 @@
 @extends(Asundust\DcatAuthCaptcha\DcatAuthCaptchaServiceProvider::instance()->getName().'::login_base')
 @section('content')
-  <div id="captchaError" class="form-group has-feedback {!! !$errors->has('captcha') ?: 'has-error' !!}"
-       style="margin-bottom: 0;">
-    @if($errors->has('captcha'))
-      @foreach($errors->get('captcha') as $message)
-        <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{ $message }}
-        </label><br>
-      @endforeach
-    @endif
-  </div>
-  <div class="form-group row">
-    <div class="col-xs-12" id="yunpianContainer"></div>
-  </div>
-  <div class="row">
-    <div class="col-xs-8">
-      @if(config('admin.auth.remember'))
-        <div class="checkbox icheck">
-          <label>
-            <input type="checkbox" name="remember"
-                   value="1" {{ (!old('username') || old('remember')) ? 'checked' : '' }}>
-            {{ trans('admin.remember_me') }}
-          </label>
-        </div>
-      @endif
-    </div>
-    <div class="col-xs-4">
-      <input type="hidden" name="_token" value="{{ csrf_token() }}">
-      <input type="hidden" id="token" name="token" value="">
-      <input type="hidden" id="authenticate" name="authenticate" value="">
-      <button type="button" class="btn btn-primary float-right login-btn" id="loginButton">
-        {{ trans('admin.login') }}
-      </button>
-    </div>
-  </div>
+  <fieldset class="form-label-group form-group position-relative has-icon-left">
+    <div id="yunpianContainer"></div>
+  </fieldset>
+  @include(Asundust\DcatAuthCaptcha\DcatAuthCaptchaServiceProvider::instance()->getName().'::login_remember')
+  <input type="hidden" id="token" name="token" value="">
+  <input type="hidden" id="authenticate" name="authenticate" value="">
+  @include(Asundust\DcatAuthCaptcha\DcatAuthCaptchaServiceProvider::instance()->getName().'::login_button')
 @endsection
 @section('js')
   <script src="https://www.yunpian.com/static/official/js/libs/riddler-sdk-0.2.2.js"></script>
   <script>
+    let messagesFail = '{{ Asundust\DcatAuthCaptcha\DcatAuthCaptchaServiceProvider::trans('dcat-auth-captcha.messages.fail') }}';
+
     window.onload = function () {
       // 初始化
       new YpRiddler(Object.assign({
-        mode: '{{ config('admin.extensions.dcat-auth-captcha.style') }}',
+        mode: '{{ $captchaStyle }}',
         winWidth: 300,
         container: $('#yunpianContainer'),
         appId: '{{ $captchaAppid }}',
         version: 'v1',
         onError: function (param) {
           console.error(param);
-          failMessage('{{ __('Sliding validation failed. Please try again.') }}');
+          toastr.error(messagesFail);
         },
         onSuccess: function (validInfo, close, useDefaultSuccess) {
           $('#token').attr('value', validInfo.token);
@@ -56,17 +32,17 @@
           close();
         },
         onFail: function (code, msg, retry) {
-          failMessage('{{ __('Sliding validation failed. Please try again.') }}');
+          toastr.error(messagesFail);
           retry();
         }
       }, @json($extConfig)));
-      $('#login-form').on('keyup', function (event) {
-        if (event.keyCode === 13) {
-          $('#loginButton').click();
+
+      // ajax表单提交
+      $('#login-form').form({
+        validate: true,
+        before: function (param) {
+          return captchaTokenCheck(true);
         }
-      });
-      $('#loginButton').on('click', function (event) {
-        formValidate();
       });
     };
   </script>

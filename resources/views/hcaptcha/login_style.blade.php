@@ -1,7 +1,9 @@
 @extends(Asundust\DcatAuthCaptcha\DcatAuthCaptchaServiceProvider::instance()->getName().'::login_base')
 @section('content')
-  <div class="h-captcha" data-sitekey="{{ $captchaAppid }}"
-       data-callback="hCaptchaCallback" style="text-align: center;margin-bottom: 11px"></div>
+  <fieldset class="form-label-group form-group position-relative has-icon-left">
+    <div class="h-captcha" data-sitekey="{{ $captchaAppid }}"
+         data-callback="hCaptchaCallback" style="text-align: center;width: 300px"></div>
+  </fieldset>
   @include(Asundust\DcatAuthCaptcha\DcatAuthCaptchaServiceProvider::instance()->getName().'::login_remember')
   <input type="hidden" id="token" name="token" value="">
   @include(Asundust\DcatAuthCaptcha\DcatAuthCaptchaServiceProvider::instance()->getName().'::login_button')
@@ -19,6 +21,13 @@
         validate: true,
         before: function (param) {
           return captchaTokenCheck(true);
+        },
+        success: function () {
+          //
+        },
+        error: function () {
+          hcaptcha.reset()
+          $('#token').attr('value', '');
         }
       });
     });

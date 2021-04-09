@@ -39,16 +39,18 @@
   </style>
 @endsection
 @section('content')
-  <div id="vaptchaContainer" style="width: 300px;height: 36px;">
-    <div class="vaptcha-init-main">
-      <div class="vaptcha-init-loading">
-        <a href="/" target="_blank">
-          <img src="https://r.vaptcha.net/public/img/vaptcha-loading.gif"/>
-        </a>
-        <span class="vaptcha-text">VAPTCHA启动中...</span>
+  <fieldset class="form-label-group form-group position-relative has-icon-left">
+    <div id="vaptchaContainer" style="width: 300px;height: 36px;">
+      <div class="vaptcha-init-main">
+        <div class="vaptcha-init-loading">
+          <a href="/" target="_blank">
+            <img src="https://r.vaptcha.net/public/img/vaptcha-loading.gif"/>
+          </a>
+          <span class="vaptcha-text">VAPTCHA启动中...</span>
+        </div>
       </div>
     </div>
-  </div>
+  </fieldset>
 @endsection
 @section('js')
   <script src="https://v.vaptcha.com/v3.js"></script>

@@ -16,6 +16,13 @@
         validate: true,
         before: function (param) {
           return captchaTokenCheck(true);
+        },
+        success: function () {
+          captcha.hide()
+        },
+        error: function () {
+          captcha.hide()
+          $('#token').attr('value', '');
         }
       });
 

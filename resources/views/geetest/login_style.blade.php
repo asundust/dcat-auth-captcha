@@ -27,6 +27,12 @@
             validate: true,
             before: function (param) {
               return captchaTokenCheck(true);
+            },
+            success: function () {
+              //
+            },
+            error: function () {
+              $('#token').attr('value', '');
             }
           });
         }).onSuccess(function () {

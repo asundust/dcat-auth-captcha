@@ -26,6 +26,12 @@
                 return false;
               }
             },
+            success: function () {
+              //
+            },
+            error: function () {
+              $('#token').attr('value', '');
+            }
           });
         }).onSuccess(function () {
           captchaObj.bindForm('#login-form');

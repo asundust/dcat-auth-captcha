@@ -18,6 +18,13 @@
             return false;
           }
         },
+        success: function () {
+          captcha.hide()
+        },
+        error: function () {
+          captcha.hide()
+          $('#token').attr('value', '');
+        }
       });
 
       let captcha = _dx.Captcha(document.getElementById('dingxiangContainer'),

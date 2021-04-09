@@ -6,6 +6,7 @@
           data-sitekey="{{ $captchaAppid }}"
           data-callback="recaptchaCallback">
     {{ trans('admin.login') }}
+    <i class="feather icon-arrow-right"></i>
   </button>
 @endsection
 @section('js')
@@ -28,6 +29,12 @@
               return false;
             }
           },
+          success: function () {
+            //
+          },
+          error: function () {
+            $('#token').attr('value', '');
+          }
         });
       });
     });
