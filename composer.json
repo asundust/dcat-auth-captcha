@@ -25,7 +25,7 @@
     "php": ">=7.1.0",
     "ext-json": "*",
     "dcat/laravel-admin": "~2.0",
-    "guzzlehttp/guzzle": "^6.3",
+    "guzzlehttp/guzzle": "^6.3 || ^7.3",
     "jenssegers/agent": "^2.6"
   },
   "autoload": {
