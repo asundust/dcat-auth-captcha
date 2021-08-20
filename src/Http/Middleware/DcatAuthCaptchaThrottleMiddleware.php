@@ -15,8 +15,7 @@ class DcatAuthCaptchaThrottleMiddleware extends ThrottleRequests
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param Closure $next
-     * @param array $limits
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Illuminate\Http\Exceptions\ThrottleRequestsException
@@ -48,9 +47,10 @@ class DcatAuthCaptchaThrottleMiddleware extends ThrottleRequests
      * Create a 'too many attempts' exception.
      *
      * @param \Illuminate\Http\Request $request
-     * @param string $key
-     * @param int $maxAttempts
-     * @param callable|null $responseCallback
+     * @param string                   $key
+     * @param int                      $maxAttempts
+     * @param callable|null            $responseCallback
+     *
      * @return \Illuminate\Http\Exceptions\HttpResponseException|\Illuminate\Http\Exceptions\ThrottleRequestsException|\Illuminate\Http\JsonResponse
      */
     protected function buildException($request, $key, $maxAttempts, $responseCallback = null)
