@@ -1,9 +1,9 @@
-dcat-admin登陆 滑动验证插件 多平台支持
+dcat-admin登录 滑动验证插件 多平台支持
 ======
 
 ![StyleCI build status](https://github.styleci.io/repos/355441406/shield)
 
-dcat-admin登陆 滑动验证插件 多平台支持
+dcat-admin登录 滑动验证插件 多平台支持
 
 > 另有 [laravel-admin版](https://github.com/asundust/auth-captcha)
 
@@ -193,7 +193,7 @@ composer require asundust/dcat-auth-captcha
 
 ### 使用
 
-在浏览器里打开dcat-admin登陆页
+在浏览器里打开dcat-admin登录页
 
 ### 未来
 

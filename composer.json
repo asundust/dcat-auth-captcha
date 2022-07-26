@@ -1,7 +1,7 @@
 {
   "name": "asundust/dcat-auth-captcha",
-  "alias": "登陆滑动验证码",
-  "description": "Sliding captcha for Dcat-Admin auth, Multiple platform support / Dcat-Admin登陆 (滑动)验证插件 多平台支持",
+  "alias": "登录滑动验证码",
+  "description": "Sliding captcha for Dcat-Admin auth, Multiple platform support / Dcat-Admin登录 (滑动)验证插件 多平台支持",
   "type": "library",
   "keywords": [
     "dcat-admin",
