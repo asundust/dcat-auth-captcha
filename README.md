@@ -1,15 +1,15 @@
-dcat-admin登录 滑动验证插件 多平台支持
+Dcat-Admin登录 滑动验证插件 多平台支持
 ======
 
 ![StyleCI build status](https://github.styleci.io/repos/355441406/shield)
 
-dcat-admin登录 滑动验证插件 多平台支持
+Dcat-Admin登录 滑动验证插件 多平台支持
 
-> 另有 [laravel-admin版](https://github.com/asundust/auth-captcha)
+> 另有 [Laravel-Admin版](https://github.com/asundust/auth-captcha)
 
 ### Demo演示
 
-[~~演示站点~~](https://captcha.leeay.com)（暂时无，目前地址为laravel-admin版的演示地址）
+[~~演示站点~~](https://captcha.leeay.com)（暂时无，目前地址为Laravel-Admin版的演示地址）
 
 ### 支持(按照字母顺序)
 
