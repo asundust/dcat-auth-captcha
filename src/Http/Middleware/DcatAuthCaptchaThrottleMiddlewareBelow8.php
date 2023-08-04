@@ -25,7 +25,7 @@ class DcatAuthCaptchaThrottleMiddlewareBelow8 extends ThrottleRequests
      */
     public function handle($request, Closure $next, $maxAttempts = 60, $decayMinutes = 1, $prefix = '')
     {
-        $key = $prefix.$this->resolveRequestSignature($request);
+        $key = $prefix . $this->resolveRequestSignature($request);
 
         $maxAttempts = $this->resolveMaxAttempts($request, $maxAttempts);
 
@@ -38,7 +38,8 @@ class DcatAuthCaptchaThrottleMiddlewareBelow8 extends ThrottleRequests
         $response = $next($request);
 
         return $this->addHeaders(
-            $response, $maxAttempts,
+            $response,
+            $maxAttempts,
             $this->calculateRemainingAttempts($key, $maxAttempts)
         );
     }
